@@ -1,0 +1,32 @@
+### create a new item
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+    "name": "Laptop",
+    "description": "A powerful new model laptop",
+    "price": 2000,
+    "category": "Electronics"
+}
+
+### retrieve all items
+GET http://localhost:3000/items
+
+### retrieve a specific item
+GET http://localhost:3000/items/6837121b08e4e82539e283ec
+
+### PUT an item
+PUT http://localhost:3000/items/683822f6691400a2c842ed1c
+Content-Type: application/json
+
+  {
+    "name": "Speaker",
+    "description": "A very loud speaker for evangelism",
+    "price": 800,
+    "category": "Electronics",
+    "createdAt": "2025-05-29T09:03:50.313Z",
+    "__v": 0
+  }
+
+### delete an item
+DELETE http://localhost:3000/items/683707175b41fb56a24b6dea
