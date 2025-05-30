@@ -8,7 +8,7 @@
   "host": "https://cse-341-project-2-pvwr.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/items/": {
