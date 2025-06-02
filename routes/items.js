@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const itemsController = require('../controllers/items');
 
+const { isAuthenticated } = require('../middleware/authenticate');
+
 const {body, validationResult } = require("express-validator");
 
 const validateItem = [
@@ -21,8 +23,8 @@ const validateItem = [
 // Define API routes
 router.get('/', itemsController.getAll);
 router.get('/:id', itemsController.getSingle);
-router.post('/', validateItem, itemsController.createItem);
-router.put('/:id', validateItem, itemsController.updateItem);
-router.delete('/:id', itemsController.deleteItem);
+router.post('/', isAuthenticated, validateItem, itemsController.createItem);
+router.put('/:id', isAuthenticated, validateItem, itemsController.updateItem);
+router.delete('/:id', isAuthenticated, itemsController.deleteItem);
 
 module.exports = router;
