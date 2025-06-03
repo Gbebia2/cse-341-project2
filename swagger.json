@@ -2,22 +2,46 @@
   "swagger": "2.0",
   "info": {
     "title": "Item API",
-    "description": "API for managing items in a MongoDB database",
+    "description": "API for managing items in a MongoDB database. GitHub OAuth is required for POST, PUT, and DELETE routes.",
     "version": "1.0.0"
   },
-  "host": "cse-341-project-2-pvwr.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["http"],
+  "securityDefinitions": {
+    "OAuth2": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://github.com/login/oauth/authorize",
+      "tokenUrl": "https://github.com/login/oauth/access_token",
+      "scopes": {}
+    }
+  },
   "paths": {
+    "/login": {
+      "get": {
+        "description": "Redirects to GitHub for login",
+        "responses": {
+          "302": {
+            "description": "Redirect to GitHub"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "description": "Logs the user out",
+        "responses": {
+          "200": {
+            "description": "Logged out"
+          }
+        }
+      }
+    },
     "/items/": {
       "get": {
-        "tags": [],
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "description": "Retrieve all items",
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -28,8 +52,8 @@
         }
       },
       "post": {
-        "tags": [],
-        "description": "",
+        "description": "Create a new item (requires login)",
+        "security": [{ "OAuth2": [] }],
         "parameters": [
           {
             "name": "body",
@@ -37,42 +61,26 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                }
+                "name": { "example": "any" },
+                "description": { "example": "any" },
+                "price": { "example": "any" },
+                "category": { "example": "any" }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/items/{id}": {
       "get": {
-        "tags": [],
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "description": "Retrieve an item by ID",
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -82,17 +90,13 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" }
         }
       },
       "put": {
-        "tags": [],
-        "description": "",
+        "description": "Update an item by ID (requires login)",
+        "security": [{ "OAuth2": [] }],
         "parameters": [
           {
             "name": "id",
@@ -106,37 +110,24 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                }
+                "name": { "example": "any" },
+                "description": { "example": "any" },
+                "price": { "example": "any" },
+                "category": { "example": "any" }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "delete": {
-        "tags": [],
-        "description": "",
+        "description": "Delete an item by ID (requires login)",
+        "security": [{ "OAuth2": [] }],
         "parameters": [
           {
             "name": "id",
@@ -146,34 +137,24 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "204": { "description": "No Content" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/customers/": {
       "get": {
-        "tags": [],
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "description": "Retrieve all customers",
+        "produces": ["application/json"],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "post": {
-        "tags": [],
-        "description": "",
+        "description": "Create a new customer (requires login)",
+        "security": [{ "OAuth2": [] }],
         "parameters": [
           {
             "name": "body",
@@ -181,51 +162,29 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "age": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "address": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "occupation": {
-                  "example": "any"
-                },
-                "itemBought": {
-                  "example": "any"
-                }
+                "name": { "example": "any" },
+                "age": { "example": "any" },
+                "email": { "example": "any" },
+                "address": { "example": "any" },
+                "phone": { "example": "any" },
+                "occupation": { "example": "any" },
+                "itemBought": { "example": "any" }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/customers/{id}": {
       "get": {
-        "tags": [],
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "description": "Retrieve a customer by ID",
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -235,17 +194,13 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" }
         }
       },
       "put": {
-        "tags": [],
-        "description": "",
+        "description": "Update a customer by ID (requires login)",
+        "security": [{ "OAuth2": [] }],
         "parameters": [
           {
             "name": "id",
@@ -259,46 +214,27 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "age": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "address": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "occupation": {
-                  "example": "any"
-                },
-                "itemBought": {
-                  "example": "any"
-                }
+                "name": { "example": "any" },
+                "age": { "example": "any" },
+                "email": { "example": "any" },
+                "address": { "example": "any" },
+                "phone": { "example": "any" },
+                "occupation": { "example": "any" },
+                "itemBought": { "example": "any" }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "delete": {
-        "tags": [],
-        "description": "",
+        "description": "Delete a customer by ID (requires login)",
+        "security": [{ "OAuth2": [] }],
         "parameters": [
           {
             "name": "id",
@@ -308,12 +244,9 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "204": { "description": "No Content" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     }
