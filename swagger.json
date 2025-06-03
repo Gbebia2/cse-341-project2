@@ -5,9 +5,9 @@
     "description": "API for managing items in a MongoDB database. GitHub OAuth is required for POST, PUT, and DELETE routes.",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "https://cse-341-project-2-pvwr.onrender.com",
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": ["https"],
   "securityDefinitions": {
     "OAuth2": {
       "type": "oauth2",
